@@ -29,7 +29,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         const value = profile[key];
         const isLast = index === profileKeys.length - 1;
         const comma = isLast ? '' : ',';
-        addOutputLine(`&nbsp;&nbsp;<span style="color: #33ff00;">"${key}"</span>: <span style="color: #ce9178;">"${value}"</span>${comma}`);
+
+        // Format value based on type
+        let formattedValue;
+        if (Array.isArray(value)) {
+            // Format as JSON array
+            const arrayItems = value.map(item => `<span style="color: #ce9178;">"${item}"</span>`).join(', ');
+            formattedValue = `<span style="color: #fff;">[</span>${arrayItems}<span style="color: #fff;">]</span>`;
+        } else {
+            // Format as string
+            formattedValue = `<span style="color: #ce9178;">"${value}"</span>`;
+        }
+
+        addOutputLine(`&nbsp;&nbsp;<span style="color: #33ff00;">"${key}"</span>: ${formattedValue}${comma}`);
     });
 
     addOutputLine('<span style="color: #fff;">}</span>');

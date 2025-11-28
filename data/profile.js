@@ -2,7 +2,15 @@ window.profileData = {
     "profile": {
         "name": "Rafael Bianchi",
         "role": "AI Engineer",
-        "email": "rafael@bianchi.codes"
+        "interests": [
+            "Reinforcement Learning",
+            "Multi-Agent Systems",
+            "Software Engineering",
+            "Machine Learning",
+            "Deep Learning",
+            "Computer Vision",
+            "PS5", "motorcycles", "soccer", "dogs"
+        ]
     },
     "list_contacts": {
         "github": {

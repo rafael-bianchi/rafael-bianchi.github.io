@@ -39,7 +39,6 @@ a {
 /* Header */
 header {
   padding: 2rem 0;
-  border-bottom: 1px solid #333;
   margin-bottom: 2rem;
 }
 
@@ -125,5 +124,4 @@ footer {
   color: #555;
   font-size: 0.8rem;
   margin-top: auto;
-  border-top: 1px solid #333;
 }
