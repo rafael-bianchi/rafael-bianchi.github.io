@@ -1,0 +1,29 @@
+window.profileData = {
+    "profile": {
+        "name": "Rafael Bianchi",
+        "role": "AI Engineer",
+        "email": "rafael@bianchi.codes"
+    },
+    "list_contacts": {
+        "github": {
+            "label": "rafael-bianchi",
+            "url": "https://github.com/rafael-bianchi",
+            "icon": "fab fa-github"
+        },
+        "stackoverflow": {
+            "label": "rbianchi",
+            "url": "https://stackoverflow.com/users/2347115/rbianchi",
+            "icon": "fab fa-stack-overflow"
+        },
+        "linkedin": {
+            "label": "rafaelbianchi",
+            "url": "https://www.linkedin.com/in/rafaelbianchi",
+            "icon": "fab fa-linkedin"
+        },
+        "email": {
+            "label": "rafael@bianchi.codes",
+            "url": "mailto:rafael@bianchi.codes",
+            "icon": "fas fa-envelope"
+        }
+    }
+};

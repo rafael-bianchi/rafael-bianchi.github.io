@@ -1,0 +1,129 @@
+:root {
+  --bg-color: #000000;
+  --text-primary: #33ff00;
+  --text-secondary: #00cc00;
+  --accent-color: #33ff00;
+  --font-family: 'Fira Code', 'Courier New', monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  width: 100%;
+}
+
+/* Header */
+header {
+  padding: 2rem 0;
+  border-bottom: 1px solid #333;
+  margin-bottom: 2rem;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.logo span {
+  color: var(--text-secondary);
+}
+
+/* Terminal Output */
+.terminal-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 0;
+  font-size: 1.1rem;
+}
+
+.terminal-line {
+  margin-bottom: 0.5rem;
+  min-height: 1.6rem;
+  /* Prevent layout shift */
+  display: flex;
+  align-items: center;
+}
+
+.prompt {
+  color: #555;
+  margin-right: 0.75rem;
+  user-select: none;
+}
+
+.command {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.output {
+  color: var(--text-secondary);
+  margin-left: 1.5rem;
+  /* Indent output */
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.cursor {
+  display: inline-block;
+  width: 10px;
+  height: 1.2em;
+  background-color: var(--accent-color);
+  animation: blink 1s infinite;
+  vertical-align: middle;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 2rem 0;
+  color: #555;
+  font-size: 0.8rem;
+  margin-top: auto;
+  border-top: 1px solid #333;
+}
