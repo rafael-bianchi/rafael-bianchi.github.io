@@ -32,6 +32,12 @@ window.profileData = {
             "label": "rafael@bianchi.codes",
             "url": "mailto:rafael@bianchi.codes",
             "icon": "fas fa-envelope"
+        },
+        "booking": {
+            "label": "Schedule a Meeting",
+            "url": "https://calendar.google.com/calendar/appointments/schedules/AcZssZ3s2XSh4yj8lXR-bAzziwv4oguAfheXxK5QgjwNDiWeXe6HpPrm7fHQuq_YDLuvH9uiJElwLD-k?gv=true",
+            "icon": "fas fa-calendar",
+            "modal": true
         }
     }
 };

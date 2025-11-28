@@ -61,13 +61,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         const isLast = index === contactKeys.length - 1;
         const comma = isLast ? '' : ',';
 
-        addOutputLine(`&nbsp;&nbsp;<span style="color: #33ff00;">"${key}"</span>: <span style="color: #ce9178;">"<a href='${contact.url}' target='_blank'><i class='${contact.icon}'></i> ${contact.label}</a>"</span>${comma}`);
+        // Handle modal links differently
+        if (contact.modal) {
+            addOutputLine(`&nbsp;&nbsp;<span style="color: #33ff00;">"${key}"</span>: <span style="color: #ce9178;">"<a href='#' class='booking-link' data-url='${contact.url}'><i class='${contact.icon}'></i> ${contact.label}</a>"</span>${comma}`);
+        } else {
+            addOutputLine(`&nbsp;&nbsp;<span style="color: #33ff00;">"${key}"</span>: <span style="color: #ce9178;">"<a href='${contact.url}' target='_blank'><i class='${contact.icon}'></i> ${contact.label}</a>"</span>${comma}`);
+        }
     });
 
     addOutputLine('<span style="color: #fff;">}</span>');
 
     // Keep cursor blinking at the end
     addCursorLine();
+
+    // Setup modal functionality for booking link
+    setupBookingModal();
 
     // Helper Functions
     function wait(ms) {
@@ -125,5 +133,62 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function randomDelay(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    function setupBookingModal() {
+        // Create modal HTML
+        const modalHTML = `
+            <div id="booking-modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="modal-title">> schedule_meeting.sh</span>
+                        <button class="modal-close" id="close-modal">[X] CLOSE</button>
+                    </div>
+                    <div class="modal-body">
+                        <iframe id="booking-iframe" style="border: 0" width="100%" height="600" frameborder="0"></iframe>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Add modal to body
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+        // Get elements
+        const modal = document.getElementById('booking-modal');
+        const closeBtn = document.getElementById('close-modal');
+        const iframe = document.getElementById('booking-iframe');
+
+        // Add click handler to booking link
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.booking-link')) {
+                e.preventDefault();
+                const url = e.target.closest('.booking-link').dataset.url;
+                iframe.src = url;
+                modal.style.display = 'flex';
+            }
+        });
+
+        // Close modal handlers
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            iframe.src = ''; // Clear iframe when closing
+        });
+
+        // Close on background click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                iframe.src = '';
+            }
+        });
+
+        // Close on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.style.display === 'flex') {
+                modal.style.display = 'none';
+                iframe.src = '';
+            }
+        });
     }
 });
