@@ -1,6 +1,30 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const terminalContainer = document.getElementById('terminal-container');
 
+    // Theme Toggle Logic
+    const themeToggle = document.getElementById('theme-toggle');
+    const icon = themeToggle.querySelector('i');
+
+    // Check saved theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        icon.className = 'fas fa-moon';
+    }
+
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        if (currentTheme === 'light') {
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'dark');
+            icon.className = 'fas fa-sun';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+            icon.className = 'fas fa-moon';
+        }
+    });
+
     // Sequence of events
     await typeCommand('initializing environment...');
     await wait(500);

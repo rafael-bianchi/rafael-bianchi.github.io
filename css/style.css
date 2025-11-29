@@ -6,6 +6,13 @@
   --font-family: 'Fira Code', 'Courier New', monospace;
 }
 
+[data-theme="light"] {
+  --bg-color: #f0f0f0;
+  --text-primary: #006600;
+  --text-secondary: #004400;
+  --accent-color: #006600;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -21,6 +28,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
@@ -55,6 +63,23 @@ nav {
 
 .logo span {
   color: var(--text-secondary);
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  transition: all 0.3s ease;
+  opacity: 0.7;
+}
+
+.theme-toggle:hover {
+  opacity: 1;
+  transform: rotate(15deg);
 }
 
 /* Terminal Output */
