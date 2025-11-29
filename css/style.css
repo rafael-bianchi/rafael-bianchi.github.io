@@ -4,6 +4,11 @@
   --text-secondary: #00cc00;
   --accent-color: #33ff00;
   --font-family: 'Fira Code', 'Courier New', monospace;
+
+  /* JSON Syntax Highlighting - Dark Mode */
+  --json-brace: #ffffff;
+  --json-key: #33ff00;
+  --json-string: #ce9178;
 }
 
 [data-theme="light"] {
@@ -11,6 +16,11 @@
   --text-primary: #006600;
   --text-secondary: #004400;
   --accent-color: #006600;
+
+  /* JSON Syntax Highlighting - Light Mode */
+  --json-brace: #333333;
+  --json-key: #006600;
+  --json-string: #a31515;
 }
 
 * {
@@ -140,6 +150,19 @@ nav {
   100% {
     opacity: 0;
   }
+}
+
+/* JSON Syntax Classes */
+.json-brace {
+  color: var(--json-brace);
+}
+
+.json-key {
+  color: var(--json-key);
+}
+
+.json-string {
+  color: var(--json-string);
 }
 
 /* Footer */

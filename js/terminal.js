@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await wait(400);
 
     // Profile Info
-    addOutputLine('<span style="color: #fff;">{</span>');
+    addOutputLine('<span class="json-brace">{</span>');
 
     const profileKeys = Object.keys(profile);
     profileKeys.forEach((key, index) => {
@@ -58,24 +58,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         let formattedValue;
         if (Array.isArray(value)) {
             // Format as JSON array
-            const arrayItems = value.map(item => `<span style="color: #ce9178;">"${item}"</span>`).join(', ');
-            formattedValue = `<span style="color: #fff;">[</span>${arrayItems}<span style="color: #fff;">]</span>`;
+            const arrayItems = value.map(item => `<span class="json-string">"${item}"</span>`).join(', ');
+            formattedValue = `<span class="json-brace">[</span>${arrayItems}<span class="json-brace">]</span>`;
         } else {
             // Format as string
-            formattedValue = `<span style="color: #ce9178;">"${value}"</span>`;
+            formattedValue = `<span class="json-string">"${value}"</span>`;
         }
 
-        addOutputLine(`&nbsp;&nbsp;<span style="color: #33ff00;">"${key}"</span>: ${formattedValue}${comma}`);
+        addOutputLine(`&nbsp;&nbsp;<span class="json-key">"${key}"</span>: ${formattedValue}${comma}`);
     });
 
-    addOutputLine('<span style="color: #fff;">}</span>');
+    addOutputLine('<span class="json-brace">}</span>');
 
     await wait(500);
     await typeCommand('list_contacts');
     await wait(200);
 
     // Contacts Info
-    addOutputLine('<span style="color: #fff;">{</span>');
+    addOutputLine('<span class="json-brace">{</span>');
 
     const contacts = data.list_contacts;
     const contactKeys = Object.keys(contacts);
@@ -87,13 +87,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Handle modal links differently
         if (contact.modal) {
-            addOutputLine(`&nbsp;&nbsp;<span style="color: #33ff00;">"${key}"</span>: <span style="color: #ce9178;">"<a href='#' class='booking-link' data-url='${contact.url}'><i class='${contact.icon}'></i> ${contact.label}</a>"</span>${comma}`);
+            addOutputLine(`&nbsp;&nbsp;<span class="json-key">"${key}"</span>: <span class="json-string">"<a href='#' class='booking-link' data-url='${contact.url}'><i class='${contact.icon}'></i> ${contact.label}</a>"</span>${comma}`);
         } else {
-            addOutputLine(`&nbsp;&nbsp;<span style="color: #33ff00;">"${key}"</span>: <span style="color: #ce9178;">"<a href='${contact.url}' target='_blank'><i class='${contact.icon}'></i> ${contact.label}</a>"</span>${comma}`);
+            addOutputLine(`&nbsp;&nbsp;<span class="json-key">"${key}"</span>: <span class="json-string">"<a href='${contact.url}' target='_blank'><i class='${contact.icon}'></i> ${contact.label}</a>"</span>${comma}`);
         }
     });
 
-    addOutputLine('<span style="color: #fff;">}</span>');
+    addOutputLine('<span class="json-brace">}</span>');
 
     // Keep cursor blinking at the end
     addCursorLine();

@@ -13,6 +13,11 @@ window.profileData = {
         ]
     },
     "list_contacts": {
+        "linkedin": {
+            "label": "rafaelbianchi",
+            "url": "https://www.linkedin.com/in/rafaelbianchi",
+            "icon": "fab fa-linkedin"
+        },
         "github": {
             "label": "rafael-bianchi",
             "url": "https://github.com/rafael-bianchi",
@@ -22,16 +27,6 @@ window.profileData = {
             "label": "rbianchi",
             "url": "https://stackoverflow.com/users/2347115/rbianchi",
             "icon": "fab fa-stack-overflow"
-        },
-        "linkedin": {
-            "label": "rafaelbianchi",
-            "url": "https://www.linkedin.com/in/rafaelbianchi",
-            "icon": "fab fa-linkedin"
-        },
-        "email": {
-            "label": "rafael@bianchi.codes",
-            "url": "mailto:rafael@bianchi.codes",
-            "icon": "fas fa-envelope"
         },
         "booking": {
             "label": "Schedule a Meeting",
