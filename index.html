@@ -44,6 +44,14 @@
             })(window, document, "clarity", "script", "udq0hxc45l");
         }
     </script>
+
+    <!-- Remove UTM Parameters -->
+    <script>
+        if (window.location.search && window.location.search.includes('utm_')) {
+            var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.history.replaceState({ path: newUrl }, '', newUrl);
+        }
+    </script>
 </head>
 
 <body>
