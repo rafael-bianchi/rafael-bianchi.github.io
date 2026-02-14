@@ -1,5 +1,65 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    const terminalContainer = document.getElementById('terminal-container');
+document.addEventListener('DOMContentLoaded', () => {
+    const profileContent = document.getElementById('profile-content');
+    const linksContent = document.getElementById('links-content');
+
+    // Decreasing visitor counter
+    function initVisitorCounter() {
+        let count = Math.floor(Math.random() * 101) + 100; // 100-200
+        const digits = document.querySelectorAll('.counter-digit');
+        const marqueeCount = document.getElementById('marquee-visitor-count');
+        const pacman = document.querySelector('.pacman');
+
+        function updateDisplay() {
+            const padded = String(count).padStart(6, '0');
+            let lastChangedIndex = -1;
+
+            digits.forEach((digit, i) => {
+                if (digit.textContent !== padded[i]) {
+                    lastChangedIndex = i;
+                    const oldValue = digit.textContent;
+
+                    // Create ghost of old digit
+                    const ghost = document.createElement('span');
+                    ghost.className = 'digit-ghost';
+                    ghost.textContent = oldValue;
+
+                    // Calculate slide distance to Pac-Man
+                    const digitsRemaining = digits.length - 1 - i;
+                    const slideDistance = (digitsRemaining * 18) + 20; // digit width + gap + pacman offset
+                    ghost.style.setProperty('--slide-distance', slideDistance + 'px');
+
+                    digit.textContent = padded[i];
+                    digit.appendChild(ghost);
+
+                    // Remove ghost after animation
+                    setTimeout(() => ghost.remove(), 500);
+                }
+            });
+
+            // Pac-Man chomps when any digit changes
+            if (lastChangedIndex >= 0 && pacman) {
+                pacman.classList.add('chomp');
+                setTimeout(() => pacman.classList.remove('chomp'), 500);
+            }
+
+            if (marqueeCount) marqueeCount.textContent = padded;
+        }
+
+        function scheduleDecrease() {
+            const delay = Math.floor(Math.random() * 6001) + 4000; // 4-10 seconds
+            setTimeout(() => {
+                if (count > 0) {
+                    count--;
+                    updateDisplay();
+                }
+                scheduleDecrease();
+            }, delay);
+        }
+
+        updateDisplay();
+        scheduleDecrease();
+    }
+    initVisitorCounter();
 
     // Theme Toggle Logic
     const themeToggle = document.getElementById('theme-toggle');
@@ -25,138 +85,94 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // Sequence of events
-    await typeCommand('initializing environment...');
-    await wait(500);
-    await typeOutput('[OK] Environment loaded.');
-
-    await typeCommand('load_profile --user "rafael_bianchi"');
-    await wait(800);
-
-    // Load profile data from window object (loaded via script tag)
+    // Load profile data from window object
     const data = window.profileData;
 
     if (!data) {
-        await typeOutput('<span style="color: #ff0000;">[ERROR] Failed to load profile data.</span>');
+        profileContent.innerHTML = '<p style="color: red;">Error: Failed to load profile data.</p>';
         return;
     }
 
-    const profile = data.profile;
+    // Render Profile Content
+    renderProfile(data.profile, profileContent);
 
-    await wait(400);
-
-    // Profile Info
-    addOutputLine('<span class="json-brace">{</span>');
-
-    const profileKeys = Object.keys(profile);
-    profileKeys.forEach((key, index) => {
-        const value = profile[key];
-        const isLast = index === profileKeys.length - 1;
-        const comma = isLast ? '' : ',';
-
-        // Format value based on type
-        let formattedValue;
-        if (Array.isArray(value)) {
-            // Format as JSON array
-            const arrayItems = value.map(item => `<span class="json-string">"${item}"</span>`).join(', ');
-            formattedValue = `<span class="json-brace">[</span>${arrayItems}<span class="json-brace">]</span>`;
-        } else {
-            // Format as string
-            formattedValue = `<span class="json-string">"${value}"</span>`;
-        }
-
-        addOutputLine(`&nbsp;&nbsp;<span class="json-key">"${key}"</span>: ${formattedValue}${comma}`);
-    });
-
-    addOutputLine('<span class="json-brace">}</span>');
-
-    await wait(500);
-    await typeCommand('list_contacts');
-    await wait(200);
-
-    // Contacts Info
-    addOutputLine('<span class="json-brace">{</span>');
-
-    const contacts = data.list_contacts;
-    const contactKeys = Object.keys(contacts);
-
-    contactKeys.forEach((key, index) => {
-        const contact = contacts[key];
-        const isLast = index === contactKeys.length - 1;
-        const comma = isLast ? '' : ',';
-
-        // Handle modal links differently
-        if (contact.modal) {
-            addOutputLine(`&nbsp;&nbsp;<span class="json-key">"${key}"</span>: <span class="json-string">"<a href='#' class='booking-link' data-url='${contact.url}'><i class='${contact.icon}'></i> ${contact.label}</a>"</span>${comma}`);
-        } else {
-            addOutputLine(`&nbsp;&nbsp;<span class="json-key">"${key}"</span>: <span class="json-string">"<a href='${contact.url}' target='_blank'><i class='${contact.icon}'></i> ${contact.label}</a>"</span>${comma}`);
-        }
-    });
-
-    addOutputLine('<span class="json-brace">}</span>');
-
-    // Keep cursor blinking at the end
-    addCursorLine();
+    // Render Links Content
+    renderLinks(data.list_contacts, linksContent);
 
     // Setup modal functionality for booking link
     setupBookingModal();
 
     // Helper Functions
-    function wait(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
+    function renderProfile(profile, container) {
+        let html = '<h2>About Me</h2>';
+
+        // Name
+        html += `
+            <div class="profile-item">
+                <span class="profile-label">Name:</span>
+                <span class="profile-value">${profile.name}</span>
+            </div>
+        `;
+
+        // Role
+        html += `
+            <div class="profile-item">
+                <span class="profile-label">Role:</span>
+                <span class="profile-value">${profile.role}</span>
+            </div>
+        `;
+
+        // Interests
+        html += `
+            <div class="profile-item">
+                <span class="profile-label">Interests:</span>
+                <div class="interests-list">
+                    ${profile.interests.map(interest => `<span class="interest-tag">${interest}</span>`).join('')}
+                </div>
+            </div>
+        `;
+
+        // Guestbook link (connects to booking/contact)
+        html += `
+            <div class="guestbook-prompt">
+                <span class="email-icon">✉️</span>
+                <a href="#links">Sign my guestbook!</a>
+                <span class="email-icon">✉️</span>
+            </div>
+        `;
+
+        container.innerHTML = html;
     }
 
-    async function typeCommand(text) {
-        const line = document.createElement('div');
-        line.className = 'terminal-line';
-        const prompt = document.createElement('span');
-        prompt.className = 'prompt';
-        prompt.textContent = '>';
-        line.appendChild(prompt);
+    function renderLinks(contacts, container) {
+        let html = '<h2>Connect with Me!</h2>';
+        html += '<div class="links-grid">';
 
-        const content = document.createElement('span');
-        content.className = 'command';
-        line.appendChild(content);
+        const contactKeys = Object.keys(contacts);
+        contactKeys.forEach(key => {
+            const contact = contacts[key];
 
-        // Add cursor
-        const cursor = document.createElement('span');
-        cursor.className = 'cursor';
-        line.appendChild(cursor);
+            if (contact.modal) {
+                // Booking link opens in modal
+                html += `
+                    <a href="#" class="link-button booking booking-link" data-url="${contact.url}">
+                        <i class="${contact.icon}"></i>
+                        <span>${contact.label}</span>
+                    </a>
+                `;
+            } else {
+                // Regular links open in new tab
+                html += `
+                    <a href="${contact.url}" target="_blank" class="link-button ${key}">
+                        <i class="${contact.icon}"></i>
+                        <span>${contact.label}</span>
+                    </a>
+                `;
+            }
+        });
 
-        terminalContainer.appendChild(line);
-
-        for (let i = 0; i < text.length; i++) {
-            content.textContent += text[i];
-            await wait(randomDelay(30, 80));
-        }
-
-        // Remove cursor from this line
-        cursor.remove();
-    }
-
-    async function typeOutput(htmlContent) {
-        const line = document.createElement('div');
-        line.className = 'terminal-line';
-        line.innerHTML = `<span class="output">${htmlContent}</span>`;
-        terminalContainer.appendChild(line);
-    }
-
-    function addOutputLine(htmlContent) {
-        const line = document.createElement('div');
-        line.className = 'terminal-line';
-        line.innerHTML = `<span class="output">${htmlContent}</span>`;
-        terminalContainer.appendChild(line);
-    }
-
-    function addCursorLine() {
-        const line = document.createElement('div');
-        line.className = 'terminal-line';
-        line.innerHTML = '<span class="prompt">></span><span class="cursor"></span>';
-        terminalContainer.appendChild(line);
-    }
-
-    function randomDelay(min, max) {
-        return Math.floor(Math.random() * (max - min + 1) + min);
+        html += '</div>';
+        container.innerHTML = html;
     }
 
     function setupBookingModal() {
@@ -165,8 +181,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div id="booking-modal" class="modal">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <span class="modal-title">> schedule_meeting.sh</span>
-                        <button class="modal-close" id="close-modal">[X] CLOSE</button>
+                        <span class="modal-title">📅 Schedule a Meeting</span>
+                        <button class="modal-close" id="close-modal">Close [X]</button>
                     </div>
                     <div class="modal-body">
                         <iframe id="booking-iframe" style="border: 0" width="100%" height="600" frameborder="0"></iframe>

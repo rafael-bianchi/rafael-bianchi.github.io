@@ -4,13 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bianchi.codes</title>
-    <meta name="description" content="rafael-bianchi.github.io">
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <title>bianchi.codes - Welcome to my Homepage!</title>
+    <meta name="description" content="Rafael Bianchi - AI Engineer - Personal Homepage">
 
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -56,23 +51,107 @@
 
 <body>
     <div class="container">
-        <header>
-            <nav>
-                <div class="logo">bianchi<span>.codes</span></div>
-                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
-                    <i class="fas fa-sun"></i>
+        <!-- Site Banner -->
+        <header class="site-banner">
+            <h1 class="banner-title">~/bianchi.codes</h1>
+            <nav class="nav-bar">
+                <a href="#profile" class="nav-button">Home</a>
+                <a href="#links" class="nav-button">Links</a>
+                <button id="theme-toggle" class="nav-button theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-sun"></i> Theme
                 </button>
             </nav>
         </header>
 
-        <main id="terminal-container" class="terminal-container">
-            <!-- Content injected by JS -->
+        <!-- Marquee -->
+        <div class="marquee-container">
+            <span class="marquee-text">
+                ★ Welcome to my homepage! ★ Thanks for visiting! ★ You are visitor #<span id="marquee-visitor-count">000000</span>! ★ This site is best viewed at 1024x768! ★ Don't forget to sign the guestbook! ★
+            </span>
+        </div>
+
+        <!-- Under Construction Banner -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <div class="under-construction">
+                <div class="under-construction-inner">
+                    <span class="construction-icon">🚧</span>
+                    UNDER CONSTRUCTION - MORE COMING SOON!
+                    <span class="construction-icon">🚧</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main id="main-content">
+            <!-- Profile Window -->
+            <div class="win-window" id="profile">
+                <div class="win-titlebar">
+                    <span class="win-titlebar-icon">👤</span>
+                    <span class="win-titlebar-text">Profile - Rafael Bianchi</span>
+                    <div class="win-titlebar-buttons">
+                        <button class="win-btn" title="Minimize">_</button>
+                        <button class="win-btn" title="Maximize">□</button>
+                        <button class="win-btn" title="Close">×</button>
+                    </div>
+                </div>
+                <div class="win-content profile-content" id="profile-content">
+                    <!-- Content populated by JS -->
+                </div>
+            </div>
+
+            <!-- Links Window -->
+            <div class="win-window" id="links">
+                <div class="win-titlebar">
+                    <span class="win-titlebar-icon">🔗</span>
+                    <span class="win-titlebar-text">Links - Connect with me!</span>
+                    <div class="win-titlebar-buttons">
+                        <button class="win-btn" title="Minimize">_</button>
+                        <button class="win-btn" title="Maximize">□</button>
+                        <button class="win-btn" title="Close">×</button>
+                    </div>
+                </div>
+                <div class="win-content links-content" id="links-content">
+                    <!-- Content populated by JS -->
+                </div>
+            </div>
         </main>
 
-        <footer>
-            <p>&copy; 2026 Rafael Bianchi. All rights reserved.</p>
+        <!-- Footer -->
+        <footer class="site-footer">
+            <div class="footer-decorations">
+                <!-- Hit Counter -->
+                <div class="hit-counter">
+                    <span class="counter-label">Visitors:</span>
+                    <div class="counter-digits">
+                        <span class="counter-digit">0</span>
+                        <span class="counter-digit">0</span>
+                        <span class="counter-digit">0</span>
+                        <span class="counter-digit">0</span>
+                        <span class="counter-digit">1</span>
+                        <span class="counter-digit">7</span>
+                    </div>
+                    <div class="pacman"></div>
+                </div>
+
+                <!-- Best Viewed Badge -->
+                <div class="best-viewed">
+                    <span>Best viewed in</span>
+                    <span><strong>1024×768</strong></span>
+                    <span>resolution</span>
+                </div>
+
+                <!-- Web Ring -->
+                <div class="webring">
+                    <a href="#" class="webring-btn" onclick="return false;">« Prev</a>
+                    <span class="webring-text">AI Engineers WebRing</span>
+                    <a href="#" class="webring-btn" onclick="return false;">Next »</a>
+                </div>
+            </div>
+
+            <p class="copyright">© 2000 Rafael Bianchi. All rights reserved.</p>
         </footer>
     </div>
+
     <script src="data/profile.js"></script>
     <script src="js/terminal.js"></script>
 </body>
